@@ -45,6 +45,16 @@ async function init() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
+    await conn.query(`
+      CREATE TABLE IF NOT EXISTS badges (
+        id BIGINT PRIMARY KEY AUTO_INCREMENT,
+        user_id VARCHAR(128),
+        badge_id VARCHAR(128),
+        metadata JSON,
+        awarded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE KEY user_badge_unique (user_id, badge_id)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
   } finally {
     conn.release();
   }

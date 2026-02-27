@@ -1,0 +1,5 @@
+id,category,unit,value,source,region,version,effective_date
+transport_petrol_defra,transport,km,192,defra,global,v1,2026-02-01
+transport_diesel_defra,transport,km,171,defra,global,v1,2026-02-01
+electricity_china, electricity,kWh,700,ourworldindata,china,v1,2026-01-01
+food_beef_poore,food,kg,6000,poore,global,v1,2026-01-01
