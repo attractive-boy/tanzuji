@@ -58,6 +58,16 @@ async function init() {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
     await conn.query(`
+      CREATE TABLE IF NOT EXISTS users (
+        id BIGINT PRIMARY KEY AUTO_INCREMENT,
+        username VARCHAR(64) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        email VARCHAR(255),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
+
+    await conn.query(`
       CREATE TABLE IF NOT EXISTS badges (
         id BIGINT PRIMARY KEY AUTO_INCREMENT,
         user_id VARCHAR(128),

@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const { pool, init } = require('./db');
 const calc = require('./calculator');
 const badges = require('./badges');
-const { requireApiToken } = require('./auth');
+const { requireApiToken, register, login, verifyToken } = require('./auth');
 
 const app = express();
 app.use(bodyParser.json());
@@ -127,10 +127,47 @@ app.get('/evaluation', async (req, res) => {
   }
 });
 
+// 添加认证路由
+app.post('/register', register);
+app.post('/login', login);
+
 // Start server after DB init
 const PORT = process.env.PORT || 3001;
+console.log('Starting backend server on port', PORT);
+console.log('Process ID:', process.pid);
+console.log('Current directory:', process.cwd());
+
 init().then(() => {
-  app.listen(PORT, () => console.log('Backend listening on', PORT));
+  console.log('Database initialized successfully');
+  
+  const server = app.listen(PORT, '127.0.0.1', () => {
+    console.log('Backend listening on 127.0.0.1:', PORT);
+    console.log('Server address:', server.address());
+    
+    // 测试服务器是否真正运行
+    setTimeout(() => {
+      const test = require('http');
+      test.get(`http://127.0.0.1:${PORT}/health`, (res) => {
+        console.log('Self-test successful, status:', res.statusCode);
+      }).on('error', (err) => {
+        console.log('Self-test failed:', err.message);
+      });
+    }, 1000);
+  });
+  
+  server.on('error', (err) => {
+    console.error('Server error:', err);
+  });
+  
+  // Handle process signals
+  process.on('SIGTERM', () => {
+    console.log('Received SIGTERM, shutting down gracefully');
+    server.close(() => {
+      console.log('Server closed');
+      process.exit(0);
+    });
+  });
+  
 }).catch(err => {
   console.error('Failed DB init', err);
   process.exit(1);

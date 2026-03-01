@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图表显示测试</title>
+    <style>
+        body { margin: 20px; font-family: Arial, sans-serif; }
+        .test-container { margin: 20px 0; }
+        canvas, svg { border: 2px solid #333; background: #f0f0f0; }
+        .status { margin: 10px 0; padding: 10px; background: #e0e0e0; }
+    </style>
+</head>
+<body>
+    <h1>图表显示测试页面</h1>
+    
+    <div class="test-container">
+        <h2>Canvas 测试</h2>
+        <canvas id="testCanvas" width="400" height="200"></canvas>
+        <div class="status" id="canvasStatus">Canvas状态: 未初始化</div>
+    </div>
+    
+    <div class="test-container">
+        <h2>SVG 测试</h2>
+        <svg id="testSvg" width="400" height="200"></svg>
+        <div class="status" id="svgStatus">SVG状态: 未初始化</div>
+    </div>
+    
+    <div class="test-container">
+        <h2>系统信息</h2>
+        <div id="systemInfo"></div>
+    </div>
+
+    <script>
+        // 显示系统信息
+        document.getElementById('systemInfo').innerHTML = `
+            <p>浏览器: ${navigator.userAgent}</p>
+            <p>时间: ${new Date().toString()}</p>
+            <p>Canvas支持: ${!!window.CanvasRenderingContext2D ? '✓' : '✗'}</p>
+            <p>SVG支持: ${!!document.createElementNS ? '✓' : '✗'}</p>
+        `;
+
+        // Canvas测试
+        try {
+            const canvas = document.getElementById('testCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 绘制简单图形
+            ctx.fillStyle = '#4CAF50';
+            ctx.fillRect(50, 50, 100, 80);
+            
+            ctx.fillStyle = '#2196F3';
+            ctx.beginPath();
+            ctx.arc(250, 100, 40, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = '#000';
+            ctx.font = '16px Arial';
+            ctx.fillText('Canvas测试成功!', 50, 30);
+            
+            document.getElementById('canvasStatus').innerHTML = 'Canvas状态: <span style="color: green;">✓ 渲染成功</span>';
+            document.getElementById('canvasStatus').style.background = '#d4edda';
+        } catch (error) {
+            document.getElementById('canvasStatus').innerHTML = `Canvas状态: <span style="color: red;">✗ 错误: ${error.message}</span>`;
+            document.getElementById('canvasStatus').style.background = '#f8d7da';
+        }
+
+        // SVG测试
+        try {
+            const svg = document.getElementById('testSvg');
+            
+            // 创建矩形
+            const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            rect.setAttribute('x', '50');
+            rect.setAttribute('y', '50');
+            rect.setAttribute('width', '100');
+            rect.setAttribute('height', '80');
+            rect.setAttribute('fill', '#FF9800');
+            svg.appendChild(rect);
+            
+            // 创建圆形
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            circle.setAttribute('cx', '250');
+            circle.setAttribute('cy', '100');
+            circle.setAttribute('r', '40');
+            circle.setAttribute('fill', '#E91E63');
+            svg.appendChild(circle);
+            
+            // 添加文本
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('x', '50');
+            text.setAttribute('y', '30');
+            text.setAttribute('fill', '#000');
+            text.setAttribute('font-family', 'Arial');
+            text.setAttribute('font-size', '16');
+            text.textContent = 'SVG测试成功!';
+            svg.appendChild(text);
+            
+            document.getElementById('svgStatus').innerHTML = 'SVG状态: <span style="color: green;">✓ 渲染成功</span>';
+            document.getElementById('svgStatus').style.background = '#d4edda';
+        } catch (error) {
+            document.getElementById('svgStatus').innerHTML = `SVG状态: <span style="color: red;">✗ 错误: ${error.message}</span>`;
+            document.getElementById('svgStatus').style.background = '#f8d7da';
+        }
+    </script>
+</body>
+</html>

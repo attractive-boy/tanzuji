@@ -1,7 +1,12 @@
+import { AuthProvider } from './contexts/AuthContext';
 import './app.scss';
 
-function App(props) {
-  return props.children;
+function App({ children }) {
+  return (
+    <AuthProvider>
+      {children}
+    </AuthProvider>
+  );
 }
 
 export default App;

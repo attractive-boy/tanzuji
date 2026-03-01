@@ -16,6 +16,11 @@ module.exports = {
     options: {}
   },
   framework: "react",
-  mini: {},
+  mini: {
+    devServer: {
+      // 开发环境下禁用域名校验
+      disableHostCheck: true
+    }
+  },
   h5: {}
 };

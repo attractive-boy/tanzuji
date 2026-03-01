@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS可视化替代方案</title>
+    <style>
+        body { 
+            margin: 20px; 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+        }
+        
+        .container { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
+            margin: 20px 0; 
+        }
+        
+        h1 { color: #1976d2; text-align: center; }
+        h2 { color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
+        
+        /* 树木可视化 - 纯CSS实现 */
+        .tree-visualization {
+            background: linear-gradient(to top, #81c784 0%, #aed581 70%, #dcedc8 100%);
+            height: 300px;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background: #8bc34a;
+        }
+        
+        .tree {
+            position: absolute;
+            bottom: 60px;
+        }
+        
+        .trunk {
+            width: 12px;
+            height: 50px;
+            background: #5d4037;
+            margin: 0 auto;
+        }
+        
+        .crown {
+            width: 50px;
+            height: 50px;
+            background: #388e3c;
+            border-radius: 50%;
+            margin: 0 auto;
+            margin-top: -25px;
+            position: relative;
+        }
+        
+        /* 时间轴可视化 - 纯CSS实现 */
+        .timeline-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        .timeline-bar {
+            height: 40px;
+            background: linear-gradient(90deg, #4CAF50 0%, #81C784 100%);
+            margin: 8px 0;
+            border-radius: 6px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-label {
+            position: absolute;
+            bottom: -25px;
+            font-size: 12px;
+            color: #666;
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* 控制面板 */
+        .controls {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .control-group {
+            margin: 15px 0;
+        }
+        
+        label {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input, select {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        .stats {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .tree {
+                transform: scale(0.8);
+            }
+            
+            .timeline-bar {
+                height: 30px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>碳足迹可视化 (CSS版本)</h1>
+    
+    <div class="container">
+        <h2>🌳 树木生长可视化</h2>
+        <div class="tree-visualization" id="treeViz">
+            <div class="ground"></div>
+            <!-- 树木将通过JavaScript动态生成 -->
+        </div>
+        <div class="stats" id="treeStats">
+            累计排放: <span id="emissionValue">15.50</span> kgCO2e<br>
+            树木数量: <span id="treeCount">6</span> 棵<br>
+            环境状态: <span id="environmentStatus">良好</span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>📈 时间轴可视化 (最近14天)</h2>
+        <div class="timeline-container" id="timelineContainer">
+            <!-- 时间轴条形图将通过JavaScript生成 -->
+        </div>
+        <div class="stats" id="timelineStats">
+            总排放量: <span id="totalEmission">25.8</span> kgCO2e<br>
+            日均排放: <span id="averageEmission">1.84</span> kgCO2e<br>
+            最高单日: <span id="maxEmission">3.1</span> kgCO2e
+        </div>
+    </div>
+    
+    <div class="controls">
+        <h2>📊 数据控制</h2>
+        <div class="control-group">
+            <label>活动类型:</label>
+            <select id="activityType">
+                <option value="transport">交通出行 (km)</option>
+                <option value="electricity">电力消耗 (kWh)</option>
+                <option value="food">食物消费 (kg)</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label>数量:</label>
+            <input type="number" id="amount" value="1" min="0" step="0.1">
+        </div>
+        
+        <div class="control-group">
+            <label>碳因子:</label>
+            <input type="number" id="factor" value="500" min="0" step="10"> gCO2e/单位
+        </div>
+        
+        <div class="control-group">
+            <button onclick="addActivity()">添加活动</button>
+            <button onclick="resetData()">重置数据</button>
+            <button onclick="randomizeData()">随机数据</button>
+        </div>
+    </div>
+
+    <script>
+        // 示例数据
+        let dailyData = [1.2, 2.5, 0.8, 3.1, 1.9, 2.3, 1.7, 2.8, 0.9, 1.5, 2.1, 1.3, 2.7, 1.1];
+        let activities = [];
+        
+        // 初始化可视化
+        function initVisualization() {
+            updateTreeVisualization();
+            updateTimeLine();
+            updateStats();
+        }
+        
+        // 更新树木可视化
+        function updateTreeVisualization() {
+            const container = document.getElementById('treeViz');
+            const ground = container.querySelector('.ground');
+            
+            // 清除现有的树木
+            const existingTrees = container.querySelectorAll('.tree');
+            existingTrees.forEach(tree => tree.remove());
+            
+            // 计算树木数量 (排放越低，树木越多)
+            const totalEmission = dailyData.reduce((sum, val) => sum + val, 0);
+            const maxTrees = 10;
+            const minTrees = 2;
+            const treeCount = Math.max(minTrees, Math.min(maxTrees, 
+                maxTrees - Math.floor((totalEmission / 50) * (maxTrees - minTrees))
+            ));
+            
+            // 生成树木
+            for (let i = 0; i < treeCount; i++) {
+                const tree = document.createElement('div');
+                tree.className = 'tree';
+                tree.style.left = `${(i + 0.5) * (100 / treeCount)}%`;
+                tree.style.transform = 'translateX(-50%)';
+                
+                const trunk = document.createElement('div');
+                trunk.className = 'trunk';
+                
+                const crown = document.createElement('div');
+                crown.className = 'crown';
+                
+                tree.appendChild(trunk);
+                tree.appendChild(crown);
+                container.appendChild(tree);
+            }
+            
+            // 更新统计信息
+            document.getElementById('emissionValue').textContent = totalEmission.toFixed(2);
+            document.getElementById('treeCount').textContent = treeCount;
+            document.getElementById('environmentStatus').textContent = 
+                totalEmission < 10 ? '优秀 🌱' : 
+                totalEmission < 25 ? '良好 🌿' : 
+                totalEmission < 40 ? '一般 🌳' : '需要注意 🌵';
+        }
+        
+        // 更新时间轴
+        function updateTimeLine() {
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = '';
+            
+            const maxValue = Math.max(...dailyData);
+            
+            dailyData.forEach((value, index) => {
+                const bar = document.createElement('div');
+                bar.className = 'timeline-bar';
+                
+                // 根据数值调整宽度
+                const widthPercent = (value / maxValue) * 80 + 20;
+                bar.style.width = `${widthPercent}%`;
+                
+                // 添加数值显示
+                bar.textContent = `${value.toFixed(1)} kg`;
+                
+                // 添加日期标签
+                const label = document.createElement('div');
+                label.className = 'timeline-label';
+                label.textContent = `第${index + 1}天`;
+                
+                container.appendChild(bar);
+                container.appendChild(label);
+            });
+        }
+        
+        // 更新统计数据
+        function updateStats() {
+            const total = dailyData.reduce((sum, val) => sum + val, 0);
+            const average = total / dailyData.length;
+            const max = Math.max(...dailyData);
+            
+            document.getElementById('totalEmission').textContent = total.toFixed(1);
+            document.getElementById('averageEmission').textContent = average.toFixed(2);
+            document.getElementById('maxEmission').textContent = max.toFixed(1);
+        }
+        
+        // 添加活动
+        function addActivity() {
+            const type = document.getElementById('activityType').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+            const factor = parseFloat(document.getElementById('factor').value);
+            
+            if (isNaN(amount) || amount <= 0 || isNaN(factor) || factor <= 0) {
+                alert('请输入有效的数值！');
+                return;
+            }
+            
+            const kgCO2e = (amount * factor) / 1000;
+            dailyData[dailyData.length - 1] += kgCO2e;
+            
+            activities.push({
+                type: type,
+                amount: amount,
+                factor: factor,
+                kgCO2e: kgCO2e,
+                timestamp: new Date()
+            });
+            
+            // 更新所有可视化
+            initVisualization();
+        }
+        
+        // 重置数据
+        function resetData() {
+            dailyData = [1.2, 2.5, 0.8, 3.1, 1.9, 2.3, 1.7, 2.8, 0.9, 1.5, 2.1, 1.3, 2.7, 1.1];
+            activities = [];
+            initVisualization();
+        }
+        
+        // 随机数据
+        function randomizeData() {
+            dailyData = dailyData.map(() => Math.random() * 4 + 0.5);
+            initVisualization();
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initVisualization();
+        });
+    </script>
+</body>
+</html>

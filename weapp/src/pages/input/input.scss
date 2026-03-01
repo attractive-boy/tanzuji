@@ -1,0 +1,110 @@
+.input-container {
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.input-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px 0;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #666;
+}
+
+.input-form {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.half {
+  flex: 1;
+}
+
+.label {
+  display: block;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.picker, .input {
+  border: 2px solid #e1e5e9;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-size: 16px;
+  background: white;
+}
+
+.picker {
+  color: #333;
+}
+
+.input {
+  width: 100%;
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.quick-add {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.quick-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quick-btn {
+  background: #f0f5ff;
+  color: #667eea;
+  border: 1px solid #667eea;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 16px;
+}

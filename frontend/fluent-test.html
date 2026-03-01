@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fluent UI 测试</title>
+    <script type="module" src="https://unpkg.com/@fluentui/web-components@latest/dist/web-components.min.js"></script>
+</head>
+<body>
+    <h1>Fluent UI 组件测试</h1>
+    
+    <fluent-button appearance="accent">测试按钮</fluent-button>
+    <br><br>
+    
+    <fluent-select>
+        <fluent-option value="option1">选项1</fluent-option>
+        <fluent-option value="option2">选项2</fluent-option>
+    </fluent-select>
+    <br><br>
+    
+    <fluent-text-field placeholder="测试输入框"></fluent-text-field>
+    <br><br>
+    
+    <fluent-card style="width: 300px; padding: 16px;">
+        <h3>测试卡片</h3>
+        <p>这是一个Fluent UI卡片组件的测试。</p>
+    </fluent-card>
+    
+    <div id="status"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusDiv = document.getElementById('status');
+            
+            // 检查Fluent UI组件是否加载
+            if (customElements.get('fluent-button')) {
+                statusDiv.innerHTML = '<p style="color: green;">✓ Fluent UI组件加载成功</p>';
+            } else {
+                statusDiv.innerHTML = '<p style="color: red;">✗ Fluent UI组件未加载</p>';
+            }
+            
+            // 测试按钮点击事件
+            const button = document.querySelector('fluent-button');
+            if (button) {
+                button.addEventListener('click', function() {
+                    alert('按钮点击测试成功！');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

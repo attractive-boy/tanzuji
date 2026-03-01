@@ -1,0 +1,267 @@
+.badges-page {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+.page-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  padding: var(--spacing-lg) var(--spacing-md);
+  color: white;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.tab-navigation {
+  display: flex;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: var(--spacing-md);
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.tab-item.active {
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
+}
+
+.tab-content {
+  flex: 1;
+  height: calc(100vh - 180px);
+}
+
+/* 徽章标签页 */
+.badges-tab {
+  height: 100%;
+}
+
+.badges-scroll {
+  height: 100%;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+}
+
+/* 成就标签页 */
+.achievements-tab {
+  height: 100%;
+}
+
+.achievements-scroll {
+  height: 100%;
+}
+
+.achievements-list {
+  padding: var(--spacing-md);
+}
+
+.achievement-item {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+}
+
+.achievement-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.achievement-emoji {
+  font-size: 32px;
+  margin-right: var(--spacing-md);
+}
+
+.achievement-info {
+  flex: 1;
+}
+
+.achievement-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: var(--spacing-xs);
+}
+
+.achievement-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.achievement-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+  min-width: 40px;
+  text-align: right;
+}
+
+/* 挑战标签页 */
+.challenges-tab {
+  height: 100%;
+}
+
+.challenges-scroll {
+  height: 100%;
+}
+
+.challenges-list {
+  padding: var(--spacing-md);
+}
+
+.challenge-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+}
+
+.challenge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.challenge-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.challenge-duration {
+  font-size: 12px;
+  color: var(--primary-color);
+  background: rgba(102, 126, 234, 0.1);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.challenge-description {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-md);
+}
+
+.challenge-reward {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.reward-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-right: var(--spacing-sm);
+}
+
+.reward-value {
+  font-size: 14px;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.challenge-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.start-challenge-btn {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status-active {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.status-completed {
+  color: #52c41a;
+  font-weight: 500;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  text-align: center;
+  color: var(--text-light);
+  height: 100%;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+
+.empty-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-secondary);
+}
+
+.empty-description {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-secondary);
+}

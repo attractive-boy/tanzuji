@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas基础测试</title>
+    <style>
+        body { margin: 20px; font-family: Arial, sans-serif; background: #f0f0f0; }
+        .test-box { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        canvas { border: 3px solid #ff0000; background: #ffffff; display: block; margin: 10px 0; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 4px; font-weight: bold; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    </style>
+</head>
+<body>
+    <h1>Canvas显示问题诊断</h1>
+    
+    <div class="test-box">
+        <h2>测试1: 最基础的Canvas绘制</h2>
+        <canvas id="basicCanvas" width="300" height="150"></canvas>
+        <div id="basicStatus" class="status info">初始化中...</div>
+    </div>
+    
+    <div class="test-box">
+        <h2>测试2: Canvas 2D上下文检测</h2>
+        <canvas id="contextCanvas" width="300" height="100"></canvas>
+        <div id="contextStatus" class="status info">检测中...</div>
+    </div>
+    
+    <div class="test-box">
+        <h2>测试3: 动画测试</h2>
+        <canvas id="animationCanvas" width="300" height="150"></canvas>
+        <div id="animationStatus" class="status info">准备动画...</div>
+    </div>
+    
+    <div class="test-box">
+        <h2>系统信息</h2>
+        <div id="systemInfo"></div>
+    </div>
+
+    <script>
+        // 显示系统信息
+        document.getElementById('systemInfo').innerHTML = `
+            <div class="status info">
+                <strong>浏览器信息:</strong><br>
+                ${navigator.userAgent}<br><br>
+                <strong>Canvas支持检测:</strong><br>
+                Canvas元素: ${!!document.createElement('canvas') ? '✓' : '✗'}<br>
+                2D上下文: ${!!document.createElement('canvas').getContext ? '✓' : '✗'}<br>
+                WebGL支持: ${!!document.createElement('canvas').getContext('webgl') ? '✓' : '✗'}<br>
+                当前时间: ${new Date().toString()}
+            </div>
+        `;
+
+        // 测试1: 最基础的Canvas绘制
+        function testBasicCanvas() {
+            try {
+                const canvas = document.getElementById('basicCanvas');
+                const ctx = canvas.getContext('2d');
+                
+                if (!ctx) {
+                    throw new Error('无法获取2D上下文');
+                }
+                
+                // 绘制红色矩形
+                ctx.fillStyle = '#ff0000';
+                ctx.fillRect(10, 10, 100, 50);
+                
+                // 绘制蓝色圆形
+                ctx.fillStyle = '#0000ff';
+                ctx.beginPath();
+                ctx.arc(200, 50, 30, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // 绘制文字
+                ctx.fillStyle = '#000000';
+                ctx.font = '16px Arial';
+                ctx.fillText('Canvas基础测试', 10, 120);
+                
+                document.getElementById('basicStatus').innerHTML = '✓ Canvas基础绘制成功';
+                document.getElementById('basicStatus').className = 'status success';
+                
+            } catch (error) {
+                document.getElementById('basicStatus').innerHTML = `✗ Canvas基础测试失败: ${error.message}`;
+                document.getElementById('basicStatus').className = 'status error';
+            }
+        }
+
+        // 测试2: 上下文检测
+        function testContextDetection() {
+            try {
+                const canvas = document.getElementById('contextCanvas');
+                
+                // 测试各种上下文
+                const contexts = ['2d', 'webgl', 'webgl2'];
+                let available = [];
+                
+                contexts.forEach(contextType => {
+                    try {
+                        const ctx = canvas.getContext(contextType);
+                        if (ctx) {
+                            available.push(contextType);
+                        }
+                    } catch (e) {
+                        // 上下文不可用
+                    }
+                });
+                
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#4CAF50';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '14px Arial';
+                ctx.fillText(`可用上下文: ${available.join(', ')}`, 10, 30);
+                ctx.fillText(`首选2D上下文: ${available.includes('2d') ? '✓' : '✗'}`, 10, 60);
+                
+                document.getElementById('contextStatus').innerHTML = 
+                    `✓ 上下文检测完成<br>可用: ${available.join(', ')}`;
+                document.getElementById('contextStatus').className = 'status success';
+                
+            } catch (error) {
+                document.getElementById('contextStatus').innerHTML = `✗ 上下文检测失败: ${error.message}`;
+                document.getElementById('contextStatus').className = 'status error';
+            }
+        }
+
+        // 测试3: 动画测试
+        function testAnimation() {
+            try {
+                const canvas = document.getElementById('animationCanvas');
+                const ctx = canvas.getContext('2d');
+                
+                let angle = 0;
+                
+                function animate() {
+                    // 清除画布
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // 绘制背景
+                    ctx.fillStyle = '#e3f2fd';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    // 绘制旋转的矩形
+                    ctx.save();
+                    ctx.translate(150, 75);
+                    ctx.rotate(angle);
+                    ctx.fillStyle = '#ff5722';
+                    ctx.fillRect(-30, -20, 60, 40);
+                    ctx.restore();
+                    
+                    // 绘制状态文字
+                    ctx.fillStyle = '#000000';
+                    ctx.font = '14px Arial';
+                    ctx.fillText(`角度: ${(angle * 180 / Math.PI).toFixed(1)}°`, 10, 140);
+                    
+                    angle += 0.05;
+                    
+                    document.getElementById('animationStatus').innerHTML = 
+                        '✓ 动画运行中... (如果看到旋转矩形说明Canvas正常)';
+                    document.getElementById('animationStatus').className = 'status success';
+                }
+                
+                // 开始动画
+                setInterval(animate, 50);
+                
+            } catch (error) {
+                document.getElementById('animationStatus').innerHTML = `✗ 动画测试失败: ${error.message}`;
+                document.getElementById('animationStatus').className = 'status error';
+            }
+        }
+
+        // 页面加载完成后运行所有测试
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(testBasicCanvas, 100);
+            setTimeout(testContextDetection, 200);
+            setTimeout(testAnimation, 300);
+        });
+    </script>
+</body>
+</html>
