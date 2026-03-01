@@ -2,6 +2,19 @@
 
 说明
 - 首发平台：微信小程序 + PWA
+
+## 微信小程序开发
+
+仓库下有一个基本的 Taro 小程序项目放在 `weapp/`：
+
+```bash
+# 安装依赖后启动开发工具
+npm run weapp:init      # 进入 weapp 目录并安装依赖
+npm run dev:weapp       # 启动 taro 编译并开启 watch
+```
+
+在微信开发者工具中打开 `weapp/dist/weapp` 目录即可预览。
+
 - 主要模块：frontend / backend / shared / data / ci
 
 快速开始

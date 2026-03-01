@@ -31,6 +31,15 @@ async function evaluateForEntry(entry) {
       awarded.push(badge);
     }
 
+    // Country ambassador badge: if user records electricity entry and region matches known country
+    if (entry.type === 'electricity' && entry.meta && entry.meta.region) {
+      const country = entry.meta.region.toLowerCase();
+      const countryBadge = `ambassador_${country}`;
+      const badge = { badge_id: countryBadge, metadata: { country } };
+      await insertBadgeIfNotExists(conn, entry.user_id, badge);
+      awarded.push(badge);
+    }
+
     return awarded;
   } finally {
     conn.release();

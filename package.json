@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "test": "node shared/test/run_tests.js"
+    "test": "node shared/test/run_tests.js",
+    "weapp:init": "cd weapp && npm install",
+    "dev:weapp": "cd weapp && npm run dev:weapp",
+    "build:weapp": "cd weapp && npm run build:weapp"
+  },
+  "dependencies": {
+    "@fluentui/web-components": "^2.6.1"
   }
 }

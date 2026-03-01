@@ -15,16 +15,16 @@
   <main>
     <section id="controls">
       <label>新增活动（示例）
-        <select id="activityType">
-          <option value="transport">交通（km）</option>
-          <option value="electricity">用电（kWh）</option>
-          <option value="food">食物（kg）</option>
-        </select>
+        <fluent-select id="activityType" style="width:220px">
+          <fluent-option value="transport">交通（km）</fluent-option>
+          <fluent-option value="electricity">用电（kWh）</fluent-option>
+          <fluent-option value="food">食物（kg）</fluent-option>
+        </fluent-select>
       </label>
-      <label>数量 <input id="amount" type="number" step="any" value="1"></label>
-      <label>因子（gCO2e/unit） <input id="factor" type="number" step="any" value="500"></label>
-      <button id="addBtn">添加并更新可视化</button>
-      <button id="resetBtn">重置示例数据</button>
+      <label>数量 <fluent-text-field id="amount" type="number" value="1" style="width:120px"></fluent-text-field></label>
+      <label>因子（gCO2e/unit） <fluent-text-field id="factor" type="number" value="500" style="width:140px"></fluent-text-field></label>
+      <fluent-button id="addBtn" appearance="accent">添加并更新可视化</fluent-button>
+      <fluent-button id="resetBtn">重置示例数据</fluent-button>
     </section>
 
     <section id="viz">
@@ -51,10 +51,14 @@
     <small>示例原型 — 本地运行即可。</small>
   </footer>
 
+  <!-- Fluent Web Components (CDN) - load as module and before app scripts -->
+  <script type="module" src="https://unpkg.com/@fluentui/web-components@latest/dist/web-components.min.js"></script>
+
   <script src="treeViz.js"></script>
   <script src="timeline.js"></script>
   <script src="api.js"></script>
   <script src="app.js"></script>
+
 
   <!-- Badge modal -->
   <div id="badgeModal" class="modal" aria-hidden="true">

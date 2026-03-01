@@ -1,0 +1,12 @@
+{
+  "app": {
+    "title": "碳足迹计算器",
+    "add_entry": "添加记录",
+    "view_ledger": "碳账本"
+  },
+  "badges": {
+    "first_entry": "首次记录",
+    "eco_short_trip": "绿色短途出行",
+    "low_monthly_footprint": "低月排放"
+  }
+}

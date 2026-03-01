@@ -29,4 +29,5 @@ async function fetchLedger(limit = 50, offset = 0) {
 
 if (typeof window !== 'undefined') window.apiClient = { postLedger, fetchLedger };
 
-module.exports = { postLedger, fetchLedger };
+// Browser: avoid CommonJS exports in static frontend.
+// For bundlers or Node.js consumers, they can import this file separately.

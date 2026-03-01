@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>评价表 — 碳足迹原型</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>评价表</h1>
+    <p>示例：从后端获取评价表并展示。</p>
+    <p><a href="/">回到首页</a></p>
+  </header>
+
+  <main>
+    <section id="evaluation">
+      <table id="evalTable" class="eval-table" aria-describedby="evalDesc">
+        <caption id="evalDesc">功能/视觉评估结果</caption>
+        <thead>
+          <tr><th>序号</th><th>指标</th><th>分数</th><th>评语</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <small>示例原型 — 本地运行。</small>
+  </footer>
+
+  <script src="evaluation.js"></script>
+</body>
+</html>

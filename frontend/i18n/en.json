@@ -1,0 +1,12 @@
+{
+  "app": {
+    "title": "Carbon Footprint Calculator",
+    "add_entry": "Add Entry",
+    "view_ledger": "Carbon Ledger"
+  },
+  "badges": {
+    "first_entry": "First Entry",
+    "eco_short_trip": "Eco Short Trip",
+    "low_monthly_footprint": "Low Monthly Footprint"
+  }
+}

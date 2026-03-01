@@ -1,14 +1,52 @@
+:root{
+	--fluent-bg-1: linear-gradient(180deg,#f6fbff 0%, #eef6ff 100%);
+	--fluent-acrylic-bg: rgba(255,255,255,0.6);
+	--fluent-radius: 12px;
+	--fluent-blue: #0078D4;
+	--fluent-shadow: 0 8px 30px rgba(16,24,40,0.08);
+	--fluent-duration: 180ms;
+	--fluent-ease: cubic-bezier(.2,.9,.2,1);
+}
+
 * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
-body { margin: 0; padding: 16px; background: #f7fbf7; color: #17252a; }
+body { margin: 0; padding: 16px; background: var(--fluent-bg-1); color: #17252a; }
+/* Unsplash-backed soft background for Fluent 2 mood */
+body::before{
+	content: '';
+	position: fixed; inset: 0; z-index: -2;
+	background-image: url('https://source.unsplash.com/1600x900/?soft,blue,abstract');
+	background-size: cover; background-position: center; opacity: 0.28;
+	filter: saturate(110%) blur(2px);
+}
+/* subtle overlay gradient to keep acrylic readable */
+body::after{
+	content: '';
+	position: fixed; inset: 0; z-index: -1;
+	background: linear-gradient(180deg, rgba(246,251,255,0.55), rgba(238,246,255,0.6));
+}
 header { margin-bottom: 12px; }
 #controls { display:flex; gap:8px; align-items:center; margin-bottom:12px; flex-wrap:wrap }
 #controls label { display:flex; gap:6px; align-items:center }
-button { padding:6px 10px; border-radius:6px; border:1px solid #d0e6d0; background:#e9f5e9; cursor:pointer }
-#viz { display:flex; gap:20px; }
-.viz-col { background: #ffffff; padding:12px; border-radius:8px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+
+/* Fluent button defaults (works with fluent-button web component) */
+#controls fluent-button, #controls button { font-family: inherit; }
+#controls fluent-button[appearance="accent"]{ background: linear-gradient(180deg,var(--fluent-blue),#006bb3); color: #fff; border-radius:8px; padding:8px 14px; }
+#controls fluent-button{ border-radius:8px; padding:8px 12px; cursor:pointer }
+
+#viz { display:flex; gap:20px; align-items:flex-start; }
+.viz-col { background: var(--fluent-acrylic-bg); padding:14px; border-radius:var(--fluent-radius); box-shadow: var(--fluent-shadow); backdrop-filter: blur(8px) saturate(120%); border: 1px solid rgba(255,255,255,0.6); transition: transform var(--fluent-duration) var(--fluent-ease), box-shadow var(--fluent-duration); max-width:100%; }
+.viz-col:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(16,24,40,0.12); }
+
 .stats { margin-top:8px; font-size:14px; color:#3b4b3a }
 #entries { list-style:none; padding:0; }
-#entries li { background:#fff; margin:6px 0; padding:8px; border-radius:6px; border:1px solid #eef6ee }
+#entries li { background: rgba(255,255,255,0.9); margin:6px 0; padding:8px; border-radius:8px; border:1px solid rgba(230,240,255,0.4); }
+/* Fluent card entry styling */
+.entry-card{ display:block; padding:10px; border-radius:10px; background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(250,250,255,0.86)); box-shadow: 0 6px 18px rgba(16,24,40,0.06); }
+.entry-title{ font-weight:600; color:#0b4a6f; margin-bottom:6px }
+.entry-meta{ font-size:13px; color:#345 }
+
+/* Badge gallery improvements */
+.badge-image{ border-radius:8px; box-shadow: 0 6px 20px rgba(16,24,40,0.1); }
 footer { margin-top:16px; font-size:12px; color:#667 }
 
 /* Modal badge */
@@ -17,3 +55,14 @@ footer { margin-top:16px; font-size:12px; color:#667 }
 .modal-content { background:#fff; padding:18px; border-radius:10px; width:320px; max-width:90%; box-shadow:0 8px 30px rgba(0,0,0,0.25); }
 .modal .close { float:right; background:transparent; border:none; font-size:18px; cursor:pointer }
 .badge-image { width:96px; height:96px; display:block; margin:8px auto }
+
+/* Responsive adjustments for mobile */
+@media (max-width: 720px) {
+	#controls { gap:6px; }
+	#controls fluent-select, #controls fluent-text-field { width: 100%; min-width:0 }
+	#controls { flex-direction: column; align-items: stretch }
+	#viz { flex-direction: column; gap:12px }
+	#treeCanvas, #timeline { width: 100% !important; height: auto; }
+	.viz-col { padding:12px }
+	header h1 { font-size:20px }
+}

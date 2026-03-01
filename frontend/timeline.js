@@ -1,13 +1,16 @@
 // Simple timeline: render last N days as bars (kgCO2e per day)
 function renderTimeline(svgEl, dailyValues) {
-  const width = svgEl.getAttribute('width');
-  const height = svgEl.getAttribute('height');
-  const w = +width, h = +height;
-  const padding = 24;
+  // Compute size from element's layout size for responsiveness
+  const rect = svgEl.getBoundingClientRect();
+  const w = Math.max(120, Math.floor(rect.width || parseInt(svgEl.getAttribute('width') || 600)));
+  const h = Math.max(80, Math.floor(rect.height || parseInt(svgEl.getAttribute('height') || 300)));
+  const padding = Math.min(28, Math.floor(w * 0.06));
+  svgEl.setAttribute('width', w);
+  svgEl.setAttribute('height', h);
   const n = dailyValues.length;
   const maxV = Math.max(1, ...dailyValues.map(v=>v));
-  const barW = (w - padding*2) / n * 0.8;
-  const gap = (w - padding*2 - barW*n) / (n-1 || 1);
+  const barW = (w - padding*2) / n * 0.78;
+  const gap = n > 1 ? (w - padding*2 - barW*n) / (n-1) : 0;
 
   // Clear
   svgEl.innerHTML = '';
@@ -30,7 +33,8 @@ function renderTimeline(svgEl, dailyValues) {
     txt.setAttribute('y', h - padding + 14);
     txt.setAttribute('text-anchor', 'middle');
     txt.setAttribute('fill', '#2b3b2b');
-    txt.setAttribute('font-size', '10');
+    const fontSize = Math.max(9, Math.round(10 * (w/600)));
+    txt.setAttribute('font-size', `${fontSize}`);
     txt.textContent = `${v.toFixed(2)}`;
     svgEl.appendChild(txt);
   });

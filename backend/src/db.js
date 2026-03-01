@@ -15,7 +15,19 @@ const pool = mysql.createPool({
 });
 
 async function init() {
-  const conn = await pool.getConnection();
+  // Try to get a connection with retries to tolerate transient DB network issues
+  let conn;
+  const maxAttempts = 5;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      conn = await pool.getConnection();
+      break;
+    } catch (err) {
+      console.error(`DB connect attempt ${attempt} failed:`, err && err.message);
+      if (attempt === maxAttempts) throw err;
+      await new Promise(r => setTimeout(r, attempt * 500));
+    }
+  }
   try {
     // Create simple tables if they don't exist
     await conn.query(`
@@ -56,7 +68,7 @@ async function init() {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
   } finally {
-    conn.release();
+    if (conn) conn.release();
   }
 }
 

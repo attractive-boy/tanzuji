@@ -10,6 +10,22 @@ class TreeViz {
     this.cumulativeKg = 0;
   }
 
+  // Resize canvas to match CSS size and devicePixelRatio for crisp rendering
+  resize() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = this.canvas.getBoundingClientRect();
+    const w = Math.max(100, Math.floor(rect.width));
+    const h = Math.max(80, Math.floor(rect.height || (rect.width * 0.6)));
+    this.canvas.style.width = w + 'px';
+    this.canvas.style.height = h + 'px';
+    this.canvas.width = Math.floor(w * dpr);
+    this.canvas.height = Math.floor(h * dpr);
+    this.ctx = this.canvas.getContext('2d');
+    this.ctx.scale(dpr, dpr);
+    this.width = w;
+    this.height = h;
+  }
+
   setCumulativeKg(kg) {
     this.cumulativeKg = kg;
     this.draw();
@@ -36,8 +52,9 @@ class TreeViz {
 
     // Draw label
     this.ctx.fillStyle = '#26421a';
-    this.ctx.font = '14px sans-serif';
-    this.ctx.fillText(`累计排放: ${this.cumulativeKg.toFixed(2)} kgCO2e`, 10, 20);
+    const fontSize = Math.max(12, Math.round(14 * (this.width / 400)));
+    this.ctx.font = `${fontSize}px sans-serif`;
+    this.ctx.fillText(`累计排放: ${this.cumulativeKg.toFixed(2)} kgCO2e`, 10, Math.max(18, fontSize + 4));
   }
 
   drawTree(x, groundY) {
